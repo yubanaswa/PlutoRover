@@ -15,7 +15,7 @@ namespace PlutoRoverApi.Controllers
         // POST: send a Command to the Rover API
         // command can be a string having multiple commands
         // public async Task Post([FromBody]string command)
-        public async Task Post([FromBody]string command, [FromBody] Rover rover)
+        public async Task Post([FromBody]string command, [FromBody] IRover rover)
         {
             // assertion here
             Debug.Assert(rover != null);

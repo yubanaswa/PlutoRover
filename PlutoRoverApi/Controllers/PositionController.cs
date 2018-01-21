@@ -11,7 +11,7 @@ namespace PlutoRoverApi.Controllers
     /// </summary>
     public class PositionController : ApiController
     {        
-        public async Task<RoverPosition> GetPositionAsync([FromBody] Rover rover)
+        public async Task<RoverPosition> GetPositionAsync([FromBody] IRover rover)
         {
             // assertion here
             Debug.Assert(rover != null);
@@ -21,7 +21,7 @@ namespace PlutoRoverApi.Controllers
             return position;
         }
 
-        public async Task SetPositionAsync(RoverPosition position, [FromBody] Rover rover)
+        public async Task SetPositionAsync(RoverPosition position, [FromBody] IRover rover)
         {
             // assertion here
             Debug.Assert(rover != null);

@@ -68,6 +68,9 @@ namespace PlutoRoverApi.Controllers.Tests
                 mockRover.Expects.One.Method(p => p.Move('F')).
                 Will( /*basically do nothing*/)
             );
+
+            var commandController = new CommandController();
+            await commandController.Post("FFFF", mockRover.MockObject);
         }
 
         [TestMethod()]
@@ -78,6 +81,22 @@ namespace PlutoRoverApi.Controllers.Tests
                 mockRover.Expects.One.Method(p => p.Move('B')).
                 Will( /*basically do nothing*/)
             );
+
+            var commandController = new CommandController();
+            await commandController.Post("BBB", mockRover.MockObject); 
         }
+
+        [TestMethod()]
+        public async Task RoverApi_UnitTest_Test_Junk_Commands()
+        {
+            var commandController = new CommandController();
+            var mockRover = _factory.CreateMock<IRover>();
+            await Task.Run(() =>
+                mockRover.Expects.One.Method(p => p.Move('B')).
+                Will( /*basically do nothing*/)
+            );
+            
+            await commandController.Post("ZYZDDD%0919$$", mockRover.MockObject); // entire command is garbage            
+        }        
     }
 }
