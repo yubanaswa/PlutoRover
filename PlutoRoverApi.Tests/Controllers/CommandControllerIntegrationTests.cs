@@ -57,6 +57,48 @@ namespace PlutoRoverApi.Controllers.Tests
         }
 
         [TestMethod()]
+        public async Task Integration_Test_MoveBackward_From_N00_F_N00100_TestWrapping()
+        {
+            var commandController = new CommandController();
+            var curiosity = new Rover();
+            await SetPosition('N', 0, 0, curiosity);
+            await commandController.Post("B", curiosity);
+
+            var position = await new PositionController().GetPositionAsync(curiosity);
+            Assert.AreEqual(position.Direction, 'N');
+            Assert.AreEqual(position.Xcord, 0);
+            Assert.AreEqual(position.Ycord, 100);
+        }
+
+        [TestMethod()]
+        public async Task Integration_Test_MoveForward_From_N00100_F_N0000_TestWrapping()
+        {
+            var commandController = new CommandController();
+            var curiosity = new Rover();
+            await SetPosition('N', 0, 100, curiosity);
+            await commandController.Post("F", curiosity);
+
+            var position = await new PositionController().GetPositionAsync(curiosity);
+            Assert.AreEqual(position.Direction, 'N');
+            Assert.AreEqual(position.Xcord, 0);
+            Assert.AreEqual(position.Ycord, 0);
+        }
+
+        [TestMethod()]
+        public async Task Integration_Test_MoveForward_From_N100100_F_N00100_TestWrapping()
+        {
+            var commandController = new CommandController();
+            var curiosity = new Rover();
+            await SetPosition('E', 100, 100, curiosity);
+            await commandController.Post("F", curiosity);
+
+            var position = await new PositionController().GetPositionAsync(curiosity);
+            Assert.AreEqual(position.Direction, 'E');
+            Assert.AreEqual(position.Xcord, 0);
+            Assert.AreEqual(position.Ycord, 100);
+        }
+
+        [TestMethod()]
         public async Task Integration_Test_MoveForward_From_N00_FFRFF_E22()
         {
             var commandController = new CommandController();
